@@ -222,26 +222,34 @@ namespace UIWpf
 
         private async void CallKeyButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isLetClick)
+            try
             {
-                isLetClick = false;
-                if(CallIcon.Kind == MaterialDesignThemes.Wpf.PackIconKind.CallEnd)
+                if (isLetClick)
                 {
-                    _audioPlayer.Stop();
-                }
-                else
-                {
-                    string filePath = GetFilenameByNumber();
-                    if (filePath != null)
+                    isLetClick = false;
+                    if (CallIcon.Kind == MaterialDesignThemes.Wpf.PackIconKind.CallEnd)
                     {
-                        PlayAudio(filePath);
-                        RecordStart();
-                        ChangeIconCall();
-                    }                    
+                        _audioPlayer.Stop();
+                    }
+                    else
+                    {
+                        string filePath = GetFilenameByNumber();
+                        if (filePath != null)
+                        {
+                            PlayAudio(filePath);
+                            RecordStart();
+                            ChangeIconCall();
+                        }
+                    }
+                    await Task.Delay(350);
+                    isLetClick = true;
                 }
-                await Task.Delay(350);
-                isLetClick = true;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
         #endregion
 
