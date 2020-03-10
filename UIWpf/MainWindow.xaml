@@ -7,52 +7,59 @@
         mc:Ignorable="d"
         xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="450">
     <Window.Resources>
         <ResourceDictionary Source="GeneralStyles.xaml"/>
     </Window.Resources>
-    <Grid>
-        
-        <StackPanel>
-            <Button x:Name="RecordStartButton" Content="Start Record" Click="RecordStartButton_Click"/>
+    <Grid>        
+            <!--<Button x:Name="RecordStartButton" Content="Start Record" Click="RecordStartButton_Click"/>
             <Button x:Name="RecordStopButton" Content="Stop Record" Click="RecordStopButton_Click"/>
             <Button x:Name="PlayWavButton" Content="Play Wav" Click="PlayWavButton_Click"/>
-            <Button x:Name="PlayMp3Button" Content="Play Mp3" Click="PlayMp3Button_Click"/>
+            <Button x:Name="PlayMp3Button" Content="Play Mp3" Click="PlayMp3Button_Click"/>-->
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80*"/>
-                    <ColumnDefinition Width="20*"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Width="auto" >
-                    
-                </TextBox>
-                <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Column="1">
-                    <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                        <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition Width="25*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Width="auto" x:Name="CallInputTextBox">
+
+                    </TextBox>
+                    <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Column="1">
+                        <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                            <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
                                           />
-                    </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                </kbrd:VirtualKeyKeyboardKey>
+                        </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                    </kbrd:VirtualKeyKeyboardKey>
+                </Grid>
+                
+                <UniformGrid Grid.Row="1" Rows="4" Columns="3" Height="auto"  >
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="1" UnshiftedText="1" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="2" UnshiftedText="2" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="3" UnshiftedText="3" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="4" UnshiftedText="4" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="5" UnshiftedText="5" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="6" UnshiftedText="6" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="7" UnshiftedText="7" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="8" UnshiftedText="8" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="9" UnshiftedText="9" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="+" UnshiftedText="+" />
+                    <kbrd:UnicodeKeyboardKey UnshiftedContent="0" UnshiftedText="0" />
+                    <kbrd:VirtualKeyKeyboardKey x:Name="CallKeyButton" Click="CallKeyButton_Click">
+                        <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                            <materialDesign:PackIcon Kind="Call" Height="auto" Width="auto" 
+                                         Foreground="LawnGreen" x:Name="CallIcon" />
+                        </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                    </kbrd:VirtualKeyKeyboardKey>
+                </UniformGrid>
+
             </Grid>
-            <UniformGrid Rows="4" Columns="3" Height="auto">
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="1" UnshiftedText="1" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="2" UnshiftedText="2" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="3" UnshiftedText="3" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="4" UnshiftedText="4" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="5" UnshiftedText="5" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="6" UnshiftedText="6" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="7" UnshiftedText="7" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="8" UnshiftedText="8" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="9" UnshiftedText="9" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="+" UnshiftedText="+" />
-                <kbrd:UnicodeKeyboardKey UnshiftedContent="0" UnshiftedText="0" />
-                <kbrd:VirtualKeyKeyboardKey >
-                    <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                        <materialDesign:PackIcon Kind="Call" Height="auto" Width="auto" 
-                                         Foreground="LawnGreen" />
-                    </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                </kbrd:VirtualKeyKeyboardKey>
-            </UniformGrid>
-        </StackPanel>
+
         
     </Grid>
 </Window>
