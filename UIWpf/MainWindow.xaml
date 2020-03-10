@@ -26,7 +26,12 @@
                 <TextBox Width="auto" >
                     
                 </TextBox>
-                <Button Grid.Column="1"/>
+                <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Column="1">
+                    <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                        <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
+                                          />
+                    </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                </kbrd:VirtualKeyKeyboardKey>
             </Grid>
             <UniformGrid Rows="4" Columns="3" Height="auto">
                 <kbrd:UnicodeKeyboardKey UnshiftedContent="1" UnshiftedText="1" />
@@ -43,7 +48,7 @@
                 <kbrd:VirtualKeyKeyboardKey >
                     <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                         <materialDesign:PackIcon Kind="Call" Height="auto" Width="auto" 
-                                         Foreground="LawnGreen" Name="IconControl"/>
+                                         Foreground="LawnGreen" />
                     </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 </kbrd:VirtualKeyKeyboardKey>
             </UniformGrid>

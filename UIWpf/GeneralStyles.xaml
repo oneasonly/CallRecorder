@@ -28,4 +28,29 @@
     <Style TargetType="{x:Type kbrd:CapsKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
     <Style TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
 
+    <Style x:Key="{x:Type TextBox}" 
+               TargetType="TextBox" 
+               BasedOn="{StaticResource MaterialDesignTextBoxBase}"
+               >
+        <Setter Property="AcceptsReturn" Value="true" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.5" />
+        <Setter Property="materialDesign:ValidationAssist.FontSize" Value="24" />
+        <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="20 20 0 0" />
+        <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0 6 0 0" />
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="True"/>
+                <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="false">
+                <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="False"/>
+                <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Hidden"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
