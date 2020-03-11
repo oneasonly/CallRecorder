@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,8 @@ namespace UIWpf
         int count = 1;
         bool isLetClick = true;
         private readonly string recordDir = @"records";
+        const int buttonTime = 320;
+        private CancellationTokenSource ctsPerGame = new CancellationTokenSource();
         #endregion
 
         #region Private Methods
@@ -41,8 +44,10 @@ namespace UIWpf
 
         private async void audioPlayer_PlaybackStopped(object sender, StoppedEventArgs e)
         {
-            await Task.Delay(350);            
+            await Task.Delay(buttonTime);            
             SetIconCallStart();
+            RecordStop();
+            try { ctsPerGame.Cancel(); } catch { }
         }
 
         public async Task AppMonitoring()
@@ -65,12 +70,9 @@ namespace UIWpf
 
         private void RecordStart(string filename)
         {
-            //var deviceRecorder = WasapiCapture.GetDefaultCaptureDevice();
             CaptureInstance = new WasapiCapture();
-            WaveFileWriter RecordedAudioWriter = new WaveFileWriter(filename, CaptureInstance.WaveFormat);
-
-            var hz = WasapiLoopbackCapture.GetDefaultCaptureDevice();
-            var qw2 = WasapiLoopbackCapture.GetDefaultLoopbackCaptureDevice();
+            
+            WaveFileWriter RecordedAudioWriter = new WaveFileWriter(filename, CaptureInstance.WaveFormat);            
 
             CaptureInstance.DataAvailable += (s, a) =>
             {
@@ -95,7 +97,9 @@ namespace UIWpf
             }
             string patern = "yyyy.MM.dd hh-mm";
             string endFile = ".wav";
-            string filename = $@"{recordDir}\{CallInputTextBox.Text} {DateTime.Now.ToString(patern)}";
+            string callNumber = string.Empty;
+            Dispatcher.Invoke(() => callNumber = CallInputTextBox.Text);
+            string filename = $@"{recordDir}\{callNumber} {DateTime.Now.ToString(patern)}";
             string fullFilename = filename + endFile;
             while (File.Exists(fullFilename))
             {
@@ -109,7 +113,7 @@ namespace UIWpf
 
         private void RecordStop()
         {
-            CaptureInstance.StopRecording();
+            CaptureInstance?.StopRecording();
         }
 
         private void PlayMP3()
@@ -147,21 +151,16 @@ namespace UIWpf
             string fullFilePath = null;
             string fileName = null;
             if (CallInputTextBox.Text == "101" || CallInputTextBox.Text == "112")
-            {
-                fileName = @"101.ogg";
-            }
+                fileName = @"101.mp3";
             else if (CallInputTextBox.Text == "102")
-            {
-                fileName = @"Fight the fear.mp3";
-            }
+                fileName = @"102.mp3";
             else if (CallInputTextBox.Text == "103")
-            {
-
-            }
+                fileName = @"103.mp3";
             else if (CallInputTextBox.Text == "104")
-            {
+                fileName = @"104.mp3";
+            else
+                fileName = @"unknown.mp3";
 
-            }
             if (fileName == null) return null;
             fullFilePath = $@"rules\{fileName}";
             return fullFilePath;
@@ -169,7 +168,7 @@ namespace UIWpf
 
         private async Task ChangeIconCall()
         {
-            await Task.Delay(320);
+            await Task.Delay(buttonTime);
             if (CallIcon.Kind == MaterialDesignThemes.Wpf.PackIconKind.Call)
                 SetIconCallStop();
             else
@@ -193,6 +192,7 @@ namespace UIWpf
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStyle = WindowStyle.ToolWindow;
             OnLoad();            
         }
 
@@ -237,11 +237,21 @@ namespace UIWpf
                         if (filePath != null)
                         {
                             PlayAudio(filePath);
-                            RecordStart();
+                            var inc = CallInputTextBox.Text;
+                            if (inc == "101" || inc == "112" || inc == "102" || inc == "103" || inc == "104")
+                            {
+                                try { ctsPerGame.Cancel(); } catch { }
+                                ctsPerGame = new CancellationTokenSource();
+                                Task.Run(async() =>
+                                {
+                                    await Task.Delay(7000, ctsPerGame.Token);
+                                    RecordStart();
+                                });
+                            }
                             ChangeIconCall();
                         }
                     }
-                    await Task.Delay(350);
+                    await Task.Delay(buttonTime);
                     isLetClick = true;
                 }
             }
