@@ -6,7 +6,44 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <sys:Double x:Key="globalFontSize">80</sys:Double>
-    <sys:Double x:Key="keyboardFontSize">60</sys:Double>    
+    <sys:Double x:Key="keyboardFontSize">60</sys:Double>
+
+    <Style x:Key="MainButtonStyle" 
+               TargetType="Button" 
+               BasedOn="{StaticResource MaterialDesignRaisedButton}"           
+               >
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="20 20 20 20" />
+        <Setter Property="Foreground" Value="{StaticResource MaterialDesignCardBackground}" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MainButtonStyle}"/>
+
+    <Style x:Key="RecordButtonStyle" 
+               TargetType="Button" 
+               BasedOn="{StaticResource MainButtonStyle}"           
+               >
+        <Setter Property="FontSize" Value="50" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryHueLightForegroundBrush}" />
+    </Style>
+
+    <Style x:Key="DarkButton" 
+               TargetType="Button" 
+               BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}"           
+               >
+        
+        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
+        <Setter Property="Margin" Value="4 0 1 2" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="7" />
+    </Style>
+    <!--<Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />-->
 
     <Style x:Key="KeyButton"
            TargetType="Button" 
@@ -67,6 +104,14 @@
                BasedOn="{StaticResource MaterialDesignLabel}"
                >
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+
+    <Style x:Key="{x:Type ScrollBar}" 
+               TargetType="ScrollBar" 
+               BasedOn="{StaticResource MaterialDesignScrollBar}"           
+               >
+        <Setter Property="materialDesign:ScrollBarAssist.ThumbCornerRadius" Value="15" />
+        <Setter Property="materialDesign:ScrollBarAssist.ButtonsVisibility" Value="Collapsed" />
     </Style>
 
 </ResourceDictionary>

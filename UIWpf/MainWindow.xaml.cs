@@ -1,5 +1,6 @@
 ﻿using NAudio.CoreAudioApi;
 using NAudio.Wave;
+using Rife.Keyboard;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,7 @@ namespace UIWpf
     public partial class MainWindow : Window
     {
         #region fields
+        MainWindowViewModel vmodel;
         WasapiCapture CaptureInstance;
         WaveOut _audioPlayer = new WaveOut();
         int count = 1;
@@ -193,7 +195,8 @@ namespace UIWpf
         {
             InitializeComponent();
             this.WindowStyle = WindowStyle.ToolWindow;
-            OnLoad();            
+            vmodel = this.DataContext as MainWindowViewModel;
+            OnLoad();
         }
 
         private void RecordStartButton_Click(object sender, RoutedEventArgs e)
@@ -263,5 +266,39 @@ namespace UIWpf
         }
         #endregion
 
+        private void PhonePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            PhoneColumn.Width = new GridLength(90, GridUnitType.Star);
+            RecordsColumn.Width = new GridLength(0, GridUnitType.Star);
+        }
+
+        private void RecordsPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var files = Directory.GetFiles("records").ToList();
+                vmodel.RecordsFullpaths = files;
+                itemsControl1.ItemsSource = vmodel.RecordsOnlyNames;
+            }
+            catch { }
+
+            PhoneColumn.Width = new GridLength(0, GridUnitType.Star);
+            RecordsColumn.Width = new GridLength(90, GridUnitType.Star);
+        }
+
+        private void RecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var btn = sender as Button;
+                var name = btn.Content as string;
+                var fullFilePath = $@"records\{name}";
+                PlayAudio(fullFilePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
