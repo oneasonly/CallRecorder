@@ -270,6 +270,7 @@ namespace UIWpf
         {
             PhoneColumn.Width = new GridLength(90, GridUnitType.Star);
             RecordsColumn.Width = new GridLength(0, GridUnitType.Star);
+            CallInputTextBox.Focus();
         }
 
         private void RecordsPageButton_Click(object sender, RoutedEventArgs e)
